@@ -8,6 +8,6 @@ def eth(args):
         ethDone  = ethInfo.read()
         print(ethDone)
     else:
-        newEth = os.popen('ifconfig' + args)
+        newEth = os.popen('ifconfig ' + args)
         newEthDone = newEth.read()
         print(newEthDone)
