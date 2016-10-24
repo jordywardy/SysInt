@@ -4,6 +4,7 @@ from cmd import Cmd
 import os, pwd, time, getpass, pass_file, grp, ipconfig_file
 
 class Ass(Cmd):
+	answer = "0"
 	def do_pw(self, args):
 		print("This is the current directory:")
 		pass_file.Dir()
@@ -20,28 +21,31 @@ class Ass(Cmd):
 		print(time.strftime("%Y%m%d%H%M%S"))
 
 	def do_leave(self, args):
-                print("Goodbye...")
-                time.sleep(2.5)
-                os._exit(1)
+		print("Are you sure you wish to leave? y/n")
+		answer = raw_input()
+		if (answer == "y"):
+                	print("Goodbye...")
+                	time.sleep(2.5)
+               		os._exit(1)
+		if (answer == "n"):			
+			ass1 = Ass()
+			ass1.prompt = '-->'
 
 	def do_user(self, args):
+		print("This is all the user information")
 		usr = getpass.getuser()
+		print "User: ",usr
 		usrID = pwd.getpwnam(usr).pw_uid
+		print "User ID: ",str(usrID)
 		groupID = pwd.getpwnam(usr).pw_gid
+		print "Group ID: ",str(groupID)
 		groupName = grp.getgrgid(groupID).gr_name
-	
+		print "Group Name: ",groupName
 		homeDir = os.getenv("HOME")
 		homeDirInfo = os.stat(homeDir)
 		iNode = homeDirInfo.st_ino
-
-		print(str(usrID))
-		print(str(groupID))
-		print(usr)
-		print(groupName)
-		print(str(iNode))
+		print "iNode: ",str(iNode)
 
 ass1 = Ass()
-
 ass1.prompt = '--> '
-
-ass1.cmdloop('And so it begins...')
+ass1.cmdloop("Choose an option: pw|date|user|ifc|leave")
